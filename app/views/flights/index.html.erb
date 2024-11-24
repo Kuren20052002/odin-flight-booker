@@ -28,7 +28,8 @@
 
 <% if @flights.present? %>
   <div>
-    <%= form_with url: "bookings#new", method: :get do |form| %>
+    <%= form_with url: new_booking_path, method: :get do |form| %>
+      <%= form.hidden_field :passengers_number, value: @passenger_number %>
       <fieldset>
         <legend>Select a flight</legend>
         <%= form.collection_radio_buttons(
@@ -38,7 +39,7 @@
           ->(flight) { "#{flight.departure_airport.code} to #{flight.arrival_airport.code} on #{flight.start_date.strftime('%B %d, %Y')} (#{flight.duration} minutes)" }
         ) %>
       </fieldset>
-      <% form.submit "Book Flight" %>
+      <%= form.submit "Book Flight" %>
     <% end %>
   </div>
 <% elsif params[:search].present? %>
